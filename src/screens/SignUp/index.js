@@ -9,6 +9,7 @@ import CustomButton from '../../components/Button';
 import SocialMediaButton from '../../components/SocialMediaButton';
 
 import Logo from '../../../assets/images/Logo.png';
+import axios from 'axios';
 
 const SignUp = ({navigation}) => {
   const [username, setUsername] = useState('');
@@ -16,8 +17,18 @@ const SignUp = ({navigation}) => {
   const [confirmPassword, setConfirmPassword] = useState('');
   const [email, setEmail] = useState('');
 
-  const onPressCreate = () => {
-    console.log('Buat');
+  const onPressCreate = async () => {
+    await axios
+      .post('http://10.153.243.42:1234/api/v1/auth/register', {
+        email: email,
+        password: password,
+        confirmPassword: confirmPassword,
+        username: username,
+      })
+      .then(res => {
+        console.log(res);
+      })
+      .catch(err => console.log(err));
   };
 
   return (
