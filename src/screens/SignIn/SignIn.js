@@ -1,5 +1,5 @@
 import {View, Image, StyleSheet, ScrollView, Text, Alert} from 'react-native';
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import Logo from '../../../assets/images/Logo.png';
 import {
   widthPercentageToDP as wp,
@@ -40,6 +40,15 @@ const SignIn = ({navigation}) => {
     console.log('Forgot Password');
   };
 
+  const checkLogin = async () => {
+    await AsyncStorage.getItem('token', async (err, token) => {
+      if (token) navigation.navigate('Home');
+    });
+  };
+
+  useEffect(() => {
+    checkLogin();
+  }, [navigation]);
   return (
     <ScrollView showsVerticalScrollIndicator={false}>
       <View style={styles.root}>

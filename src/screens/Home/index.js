@@ -1,5 +1,5 @@
 import {View, Text} from 'react-native';
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
@@ -8,6 +8,8 @@ import axios from 'axios';
 import {API_URL} from '@env';
 
 const Home = ({navigation}) => {
+  const [user, setUser] = useState([]);
+
   const getJwtToken = async () => {
     await AsyncStorage.getItem('token', async (err, token) => {
       if (token)
@@ -21,7 +23,7 @@ const Home = ({navigation}) => {
                 },
               })
               .then(res => {
-                console.log(res.data.data);
+                setUser(res.data.data);
               })
               .catch(err => console.log(err));
           }
@@ -36,7 +38,7 @@ const Home = ({navigation}) => {
 
   return (
     <View>
-      <Text>Home</Text>
+      <Text>{user.name}</Text>
     </View>
   );
 };
